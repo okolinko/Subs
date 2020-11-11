@@ -1,0 +1,21 @@
+
+<div class="admin__page-section order-search-items">
+    <div class="admin__page-section-title">
+        <span class="title"><?php /* @escapeNotVerified */ echo $block->getHeaderText() ?></span>
+        <?php if($block->getButtonsHtml()): ?>
+            <div class="actions"><?php echo $block->getButtonsHtml() ?></div>
+        <?php endif; ?>
+    </div>
+
+    <?php echo $block->getChildHtml('', true) ?>
+</div>
+
+<div class="js-subscription_product_save">
+    <form action="<?php echo $this->getUrl('subscriptions/profiles/updatePost')?>" method="post">
+        <?php echo $block->getBlockHtml('formkey')?>
+        <input type="hidden" name="profile_id" value="<?php echo $block->getProfile()->getId()?>" />
+        <input type="hidden" name="action_type" value="product" />
+        
+        <div class="options"></div>
+    </form>
+</div>

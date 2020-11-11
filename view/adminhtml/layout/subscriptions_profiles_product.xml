@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Toppik\Subscriptions\Block\Adminhtml\Profile\Edit\Product" template="Toppik_Subscriptions::profile/edit/product.phtml" name="product">
+                <block class="Toppik\Subscriptions\Block\Adminhtml\Profile\Edit\Product\Grid" name="search_grid" as="grid"/>
+            </block>
+        </referenceContainer>
+        
+        <referenceContainer name="after.body.start">
+            <block class="Magento\Catalog\Block\Adminhtml\Product\Composite\Configure" template="Magento_Catalog::catalog/product/composite/configure.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

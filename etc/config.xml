@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <sales>
+            <totals_sort>
+                <subscription_subtotal>15</subscription_subtotal>
+                <subscription_charges_breakdown>99</subscription_charges_breakdown>
+            </totals_sort>
+        </sales>
+    </default>
+</config>

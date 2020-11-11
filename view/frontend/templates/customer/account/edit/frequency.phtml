@@ -1,0 +1,50 @@
+
+
+<?php
+	$profile 					= $this->getProfile();
+	$subscriptionItemCollection = $this->getSubscriptionItems();
+?>
+
+<div class="page-title title-buttons clearfix">
+    <h1><?php echo $this->getTitle()?></h1>
+</div>
+
+<div class="order-info">
+	<div><?php echo __('Subscription Information') ?></div>
+	<div id="order-info-tabs">
+		<div class="current" style="margin-right: 20px"><strong><?php echo __('Billing Period')?></strong></div>
+		<div><?php echo $this->getBillingPeriod()?></div>
+	</div>
+</div>
+
+<?php if(count($subscriptionItemCollection)):?>
+	<div id="product-options-wrapper" class="form-options">
+		<h6><?php echo __('Choose An Option')?></h6>
+		
+		<form action="<?php echo $this->getUrl('subscriptions/customer/updatePost', ['_secure' => true])?>" method="post">
+			<?php echo $block->getBlockHtml('formkey')?>
+			<input type="hidden" name="id" value="<?php echo $profile->getId() ?>" />
+			<input type="hidden" name="action_type" value="frequency" />
+			
+			<dl class="last">
+				<dt id="option-select-title"></dt>
+				<dd id="option-select-content" class="last">
+					<div class="input-box">
+						<ul class="options-list" id="options--5071-list">
+							<?php foreach($subscriptionItemCollection as $item): ?>
+								<li>
+									<input type="radio"<?php echo ($profile->getFrequencyLength() == ($item->getPeriod()->getLength() * $item->getUnit()->getLength())) ? ' checked=""' : ''?>value="<?php echo $item->getId()?>" id="subscription-option-<?php echo $item->getId()?>" name="unit_id" class="radio product-custom-option" />
+									<label for="subscription-option-<?php echo $item->getId()?>"><?php echo __($item->getPeriod()->getTitle())?></label>
+								</li>
+							<?php endforeach?>
+						</ul>
+					</div>
+				</dd>
+			</dl>
+			
+			<div class="buttons-set">
+				<button class="button" type="submit"><?php echo __('Save')?></button>
+			</div>
+		</form>
+	</div>
+<?php endif?>

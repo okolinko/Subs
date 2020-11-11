@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Toppik\Subscriptions\Block\Adminhtml\Profile\View" template="profile/view.phtml" name="profile_view">
+                <block class="Toppik\Subscriptions\Block\Adminhtml\Profile\View\OrderGrid" as="orders" name="order_grid" />
+                <block class="Toppik\Subscriptions\Block\Adminhtml\Profile\View\History" as="history" name="history_grid" />
+                <block class="Toppik\Subscriptions\Block\Adminhtml\Profile\View\Save" as="save" name="save_grid" />
+                <block class="Toppik\Subscriptions\Block\Adminhtml\Profile\View\Points" as="points" name="points_grid" />
+                
+                <block class="Toppik\Subscriptions\Block\Adminhtml\Profile\View" template="Toppik_Subscriptions::profile/search/product/grid.phtml" name="products_grid">
+                    <block class="Toppik\Subscriptions\Block\Adminhtml\Profile\View\Search\Product" template="Toppik_Subscriptions::profile/search/product/abstract.phtml" name="search">
+                        <block class="Toppik\Subscriptions\Block\Adminhtml\Profile\View\Search\Product\Grid" name="search_grid" as="grid"/>
+                    </block>
+                </block>
+            </block>
+        </referenceContainer>
+        
+        <referenceContainer name="after.body.start">
+            <block class="Magento\Catalog\Block\Adminhtml\Product\Composite\Configure" template="Magento_Catalog::catalog/product/composite/configure.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

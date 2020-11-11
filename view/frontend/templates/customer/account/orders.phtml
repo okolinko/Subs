@@ -1,0 +1,58 @@
+
+<?php
+	$profile 	= $this->getProfile();
+	$collection = $this->getCollection();
+?>
+
+<div class="page-title title-buttons clearfix">
+    <h1><?php echo $this->getTitle()?></h1>
+    <?php echo $this->getChildHtml('buttons'); ?>
+</div>
+
+<div class="order-info">
+	<div><?php echo __('About This Profile:') ?></div>
+	<div id="order-info-tabs">
+		<div style="margin-right: 20px;"><a href="<?php echo $this->getUrl('*/*/view', ['id' => $profile->getId()]); ?>"><?php echo __('Subscription Information'); ?></a></div>
+		<div class="current"><strong><?php echo __('Related Orders'); ?></strong></div>
+	</div>
+</div>
+
+<?php if ($collection && count($collection)) : ?>
+    <h2 class="table-caption"><?php echo __('Orders Based on This Profile'); ?></h2>
+	
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar pager1"><?php echo $block->getPagerHtml() ?></div>
+    <?php endif ?>
+	
+    <div class="ios-safe-scroll table-wrapper">
+		<table class="data table table-order-items history ios-table" id="my-profiles-table">
+			<thead>
+				<tr>
+					<th scope="col" class="col"><span class="ios-cell"><?php echo __('Order #') ?></span></th>
+					<th scope="col" class="col"><span class="ios-cell"><?php echo __('Date') ?></span></th>
+					<th scope="col" class="col"><span class="ios-cell"><?php echo __('Customer Name') ?></span></th>
+					<th scope="col" class="col"><span class="ios-cell"><?php echo __('Order Total') ?></span></th>
+					<th scope="col" class="col"><span class="ios-cell"><?php echo __('Order Status') ?></span></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<?php foreach ($collection as $item) : ?>
+					<tr onclick="window.location.href='<?php echo $this->getViewUrl($item)?>'">
+						<td class="ios-cell col"><a href="<?php echo $this->getViewUrl($item)?>"><?php echo $item->getRealOrderId()?></a></td>
+						<td class="ios-cell col"><?php echo $this->getItemDate($item)?></td>
+						<td class="ios-cell col"><?php echo $item->getShippingAddress() ? $this->escapeHtml($item->getShippingAddress()->getName()) : '&nbsp;'?></td>
+						<td class="ios-cell col"><?php echo $item->formatPrice($item->getGrandTotal())?></td>
+						<td class="ios-cell col"><?php echo $item->getStatusLabel()?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+    </div>
+	
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom pager1"><?php echo $block->getPagerHtml() ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <div class="message info empty"><span><?php echo __('There are no orders yet.') ?></span></div>
+<?php endif ?>

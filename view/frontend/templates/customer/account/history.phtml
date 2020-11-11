@@ -1,0 +1,56 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+
+<?php $collection = $this->getCollection()?>
+
+<?php if ($collection && count($collection)) : ?>
+	<?php if ($block->getPagerHtml()): ?>
+		<div class="order-products-toolbar toolbar pager1"><?php echo $block->getPagerHtml() ?></div>
+	<?php endif ?>
+	
+    <div class="ios-safe-scroll table-wrapper">
+		<table class="data table table-order-items history ios-table" id="my-profiles-table">
+			<thead>
+				<tr>
+					<th width="50%" scope="col" class="col"><span class="ios-cell"><?php echo __('ITEM'); ?></span></th>
+					<th scope="col" class="col"><span class="nobr"><?php echo __('Qty'); ?></span></th>
+					<th scope="col" class="col ios-cell"><span class="nobr"><?php echo __('STATUS'); ?></span></th>
+					<th scope="col" class="col ios-cell"><span class="nobr"><?php echo __('NEXT SHIPMENT'); ?></span></th>
+					<th scope="col" class="col ios-cell"><span class="nobr"><?php echo __('FREQUENCY'); ?></span></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<?php foreach ($collection as $profile) : ?>
+					<tr onclick="window.location.href='<?php echo $this->getViewUrl($profile)?>'">
+						<td width="50%" class="ios-cell col"><a style="text-decoration: underline;" href="<?php echo $this->getViewUrl($profile); ?>" title="<?php echo __('View Subscription'); ?>"><?php if($name = $block->getProfileName($profile)):?><?php echo $name?><?php else:?><?php echo __('View Subscription'); ?><?php endif?></a></td>
+						<td class="ios-cell col"><?php echo $profile->getItemsQty()?></td>
+						<td class="ios-cell col"><?php echo $block->getProfileStatus($profile)?></td>
+						<td class="ios-cell col"><?php echo date('m/d/Y', strtotime($profile->getNextOrderAt())) ?></td>
+						<td class="ios-cell col"><?php echo $profile->getFrequencyTitle(); ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+    </div>
+	
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom pager1"><?php echo $block->getPagerHtml() ?></div>
+    <?php endif ?>
+	
+	<?php if(!$block->getAdminId()): ?>
+		<br/><br/>
+		<div class="well">
+            <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('customer_subscriptions_subscription_message')->toHtml()?>
+        </div>
+	<?php endif ?>
+<?php else: ?>
+    <div class="message info empty"><span><?php echo __('There are no recurring profiles yet.') ?></span></div>
+<?php endif ?>

@@ -1,0 +1,160 @@
+
+<?php $profile = $this->getProfile(); ?>
+
+<?php if($profile->canCancel()):?>
+    <button type="button" title="<?php echo __('Cancel') ?>" class="action button js-show-popup-cancel">
+        <?php echo __('Cancel') ?>
+    </button>
+    
+    <div id="js-popup-cancel" style="display: none;">
+        <?php if($profile->canCancelAsCurrentUser()):?>
+            <div class="cancel-subs-block clearfix">
+                <div class="form mt_50">
+                    <form action="<?php echo $this->getUrl('subscriptions/customer/cancel', array('form_key' => $this->getFormKey(), 'id' => $profile->getId()))?>" method="POST">
+                        <p><?php echo __('Please specify reason')?></p>
+                        
+                        <div>
+                            <select name="message">
+                                <?php foreach($block->getReasons() as $_key => $_value):?>
+                                    <option value="<?php echo $_value['value']?>"><?php echo $_value['label']?></option>
+                                <?php endforeach?>
+                            </select>
+                        </div>
+                        
+                        <div class="mt_15">
+                            <button type="submit" class="action button js-show-popup-cancel-submit"><?php echo __('Cancel')?></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <?php else:?>
+            <div class="cancel-subs-block clearfix">
+                <div class="mt_50">
+                    <p><?php echo __('Please contact customer service at 1-800-THICKEN for cancel or suspend inquiries.')?></p>
+                </div>
+            </div>
+        <?php endif?>
+    </div>
+	
+	<script type="text/javascript">
+		require(
+			['jquery', 'Magento_Ui/js/modal/modal'],
+			function($, modal) {
+				var options = {
+					type: 'popup',
+					responsive: true,
+					innerScroll: true,
+					title: 'Cancel Subscription',
+					buttons: [{
+						text: $.mage.__('Close'),
+						class: 'action button',
+						click: function () {
+                            this.closeModal();
+							return false;
+						}
+					}]
+				};
+                
+				var popup = modal(options, $('#js-popup-cancel'));
+                
+				jQuery('.js-show-popup-cancel').click(function() {
+					$('#js-popup-cancel').modal('openModal').trigger('contentUpdated');
+					return false;
+				});
+                
+                jQuery('.js-show-popup-cancel-submit').click(function() {
+                    $('#js-popup-cancel').modal('closeModal');
+                    return true;
+                });
+			}
+		);
+	</script>
+<?php endif; ?>
+
+<?php if($profile->canEditNextDate()) : ?>
+    <button type="button" title="<?php echo __('Change Shipping Date') ?>" class="action button js-show-popup-next-date"><?php echo __('Change Shipping Date') ?></button>
+	
+    <div id="js-popup-next-date" class="subscription-next-date-form" style="display: none;">
+		<div class="form mt_50">
+            <div class="calendar">
+                <input type="text" class="input-text" id="subscription_next_date" name="subscription_next_date" value="" aria-required="true" />
+            </div>
+            
+			<p class="mt_20" id="subscription_next_date_value"><?php echo __('Next Shipping Date:') ?> <span><?php echo $block->formatDate($profile->getNextOrderAt()) ?></span></p>
+		</div>
+    </div>
+    
+    <script>
+        require([
+            "jquery",
+            "mage/calendar"
+        ], function($){
+            $('#subscription_next_date').calendar({
+                buttonText: '<?php echo __('Select Date') ?>',
+                dateFormat: 'yyyy-MM-dd'
+            });
+        });
+    </script>
+    
+	<script type="text/javascript">
+		require(
+			['jquery', 'Magento_Ui/js/modal/modal'],
+			function($, modal) {
+				var options = {
+					type: 'popup',
+					responsive: true,
+					innerScroll: true,
+					title: 'Change Shipping Date',
+					buttons: [{
+						text: $.mage.__('Submit'),
+						class: 'action button',
+						click: function () {
+                            var period = $('#subscription_next_date').val();
+                            period = encodeURIComponent(period);
+                            
+                            if(period) {
+                                if(confirm('<?php echo $this->getConfirmationMessage() ?>')) {
+                                    this.closeModal();
+                                    
+                                    window.location.href = "<?php echo $this->getUrl('subscriptions/customer/updatePost', array('id' => $profile->getId(), 'action_type' => 'next_order_date', 'form_key' => $this->getFormKey()))?>date/" + period;
+                                }
+                            }
+                            
+							return false;
+						}
+					}]
+				};
+				
+				var monthNames 	= ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+				var popup 		= modal(options, $('#js-popup-next-date'));
+				
+				jQuery('.js-show-popup-next-date').click(function() {
+					$('#js-popup-next-date').modal('openModal');
+					_updateDate();
+					return false;
+				});
+				
+				$('#subscription_next_date').on('change', function() {
+					_updateDate();
+					return false;
+				});
+				
+				function _updateDate() {
+                    var c = jQuery('#subscription_next_date_value');
+                    var s = c.find('span');
+					var d = new Date($('#subscription_next_date').val());
+                    
+                    if(monthNames[d.getMonth()]) {
+                        s.html((monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear()));
+                    } else {
+                        s.html('<?php echo date('M j, Y', strtotime($profile->getNextOrderAt())) ?>')
+                    }
+				}
+			}
+		);
+	</script>
+<?php endif; ?>
+
+<?php if($profile->canActivate()) : ?>
+    <button type="button" title="<?php echo __('Reactivate') ?>" class="action button" onclick="if(confirm('<?php echo $this->getConfirmationMessage() ?>')) { window.location.href = '<?php echo $this->getActivateUrl() ?>'; }; return false;"><?php echo __('Reactivate') ?></button>
+<?php endif; ?>

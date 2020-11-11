@@ -1,0 +1,61 @@
+<?php $profile = $this->getProfile(); ?>
+
+<div class="page-title title-buttons clearfix">
+    <h1><?php echo $this->getTitle()?></h1>
+    <?php echo $this->getChildHtml('buttons'); ?>
+</div>
+
+<div class="order-info">
+    <div><?php echo __('About This Profile:') ?></div>
+    <div id="order-info-tabs">
+        <div class="current" style="margin-right: 20px;"><strong><?php echo __('Subscription Information'); ?></strong></div>
+        <div><a href="<?php echo $this->getUrl('*/*/orders', array('_current' => true)); ?>"><?php echo __('Related Orders'); ?></a></div>
+    </div>
+</div>
+
+<div class="order-info-box clearfix">
+    <div class="col-xs-6">
+        <?php echo $this->getReferenceHtml(); ?>
+    </div>
+	
+    <div class="col-xs-6">
+        <?php echo $this->getPurchaseHtml(); ?>
+    </div>
+</div>
+
+<div class="order-info-box clearfix">
+    <div class="col-xs-6">
+        <?php echo $this->getScheduleHtml(); ?>
+    </div>
+	
+    <div class="col-xs-6">
+        <?php echo $this->getPaymentsHtml(); ?>
+    </div>
+</div>
+
+<div class="order-info-box clearfix">
+    <div class="col-xs-6">
+        <?php echo $this->getBillingHtml(); ?>
+    </div>
+	
+    <div class="col-xs-6">
+        <?php echo $this->getShippingHtml(); ?>
+    </div>
+</div>
+
+<?php if($profile->canCancel()):?>
+    <?php if($profile->canCancelAsCurrentUser()):?>
+        <div class="cancel-subs-block clearfix">
+            <h1><?php echo __('Cancel Subscription')?></h1>
+            
+            <div class="mt_15">
+                <button type="button" class="action button js-show-popup-cancel"><?php echo __('Cancel')?></button>
+            </div>
+        </div>
+    <?php else:?>
+        <div class="cancel-subs-block clearfix">
+            <h1><?php echo __('Cancel Subscription')?></h1>
+            <p><?php echo __('Please contact customer service at 1-800-THICKEN for cancel or suspend inquiries.')?></p>
+        </div>
+    <?php endif?>
+<?php endif?>

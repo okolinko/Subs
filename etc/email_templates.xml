@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:Magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="subscription_report" label="Subscription Report" file="report.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_general_options_suspend_email_template_customer" label="Subscription Report" file="suspend_email_template_customer.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_general_options_suspend_email_template_admin" label="Subscription Report" file="suspend_email_template_admin.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_general_options_suspend_email_template_oos_customer" label="Subscription Report" file="suspend_email_template_oos_customer.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_general_options_suspend_email_template_oos_admin" label="Subscription Report" file="suspend_email_template_oos_admin.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_general_options_next_order_date_change" label="Subscription Report" file="next_order_date_change.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_general_options_upcoming_order_email_template" label="Upcoming Order Email Template" file="upcoming_order_email_template.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_general_options_new_subscription_email_template" label="New Subscription Email Template" file="new_subscription_email_template.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_general_options_suspended_temporarily_notification_email_template" label="Subscription Report" file="subscriptions_settings_general_options_suspended_temporarily_notification_email_template.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_save_the_sale_cancel_email_template" label="Subscription Report" file="subscriptions_settings_save_the_sale_cancel_email_template.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_save_the_sale_product_gift_email_template" label="Subscription Report" file="subscriptions_settings_save_the_sale_product_gift_email_template.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+    <template id="subscriptions_settings_save_the_sale_coupon_gift_email_template" label="Subscription Report" file="subscriptions_settings_save_the_sale_coupon_gift_email_template.html" type="html" module="Toppik_Subscriptions" area="frontend" />
+</config>

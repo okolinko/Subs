@@ -1,0 +1,49 @@
+
+<?php $profile = $this->getProfile(); ?>
+
+<div class="page-title title-buttons clearfix">
+    <h1><?php echo $this->getTitle()?></h1>
+</div>
+
+<form action="<?php echo $this->getUrl('subscriptions/customer/updatePost', ['_secure' => true])?>" method="post" class="form-options bg_n">
+	<?php echo $block->getBlockHtml('formkey')?>
+	<input type="hidden" name="id" value="<?php echo $profile->getId() ?>" />
+	<input type="hidden" name="action_type" value="cc" />
+	
+    <ul>
+		<?php if($this->hasSavedCards()): ?>
+			<?php if($this->hasMoreThanOneCard()): ?>
+				<li>
+					<?php echo __('Please choose credit card:')?>
+				</li>
+			<?php elseif($this->isCardAssignedToProfile()): ?>
+				<li>
+					<?php echo __('Credit card assigned to profile:')?>
+				</li>
+			<?php else: ?>
+				<li>
+					<?php echo __('Available credit card:')?>
+				</li>
+			<?php endif ?>
+			
+			<?php foreach($this->getCreditCardList() as $_cc): ?>
+				<li>
+					<input name="gateway_token" type="radio"<?php if($profile->getPaymentTokenReference()->getData('gateway_token') === $_cc['gateway_token']) echo ' checked="checked"' ?> id="cc-<?php echo $_cc['gateway_token'] ?>" value="<?php echo $_cc['gateway_token'] ?>" class="radio" />
+					<label for="cc-<?php echo $_cc['gateway_token'] ?>"><?php echo $_cc['type'] . ' - ' . str_repeat('*', 12) . $_cc['maskedCC'] ?><?php /* - <u onclick="location.href='<?php echo $this->getUrl('toppikvault/customer/card', array('token' => $_cc->token, 'profile_id' => $profile->getId())) ?>'"><?php echo __('edit')?></u> */ ?></label>
+				</li>
+			<?php endforeach ?>
+		<?php endif ?>
+		
+        <li>
+			<?php if($this->hasSavedCards()): ?>
+				<a href="<?php echo $this->getUrl('toppikvault/customer/card', array('profile_id' => $profile->getId())) ?>"><u><?php echo __('Add New Credit Card')?></u></a>
+			<?php else:?>
+				<a href="<?php echo $this->getUrl('toppikvault/customer/card', array('profile_id' => $profile->getId())) ?>"><u><?php echo __('Add New Credit Card')?></u></a>
+			<?php endif?>
+        </li>
+    </ul>
+	
+	<?php if($this->hasSavedCards()): ?>
+		<button type="submit" class="action primary button mt_20"><?php echo __('Save')?></button>
+	<?php endif ?>
+</form>

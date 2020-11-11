@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_product_type_prepare_full_options">
+        <observer name="add_subscription_options" instance="Toppik\Subscriptions\Observer\CatalogProductPrepareFullOptions" />
+    </event>
+    <event name="sales_quote_item_collection_products_after_load">
+        <observer name="add_subscription_options" instance="Toppik\Subscriptions\Observer\QuoteItemCollectionAfterLoad"/>
+    </event>
+    <event name="catalog_product_init_custom_options_subscriptions">
+        <observer name="add_subscription_options" instance="Toppik\Subscriptions\Observer\CatalogProductInitCustomOptionsSubscriptions"/>
+    </event>
+    <event name="checkout_cart_update_items_after">
+        <observer name="update_qty" instance="Toppik\Subscriptions\Observer\CartUpdateItemsAfter"/>
+    </event>
+    <event name="sales_quote_collect_totals_before">
+        <observer name="update_qty" instance="Toppik\Subscriptions\Observer\QuoteCollectTotalsBefore"/>
+    </event>
+    <event name="payment_method_is_active">
+        <observer name="filter_payment_method" instance="Toppik\Subscriptions\Observer\PaymentMethodIsActive"/>
+    </event>
+    <event name="subscriptions_profiles_process">
+        <observer name="subscriptions_profiles_process" instance="Toppik\Subscriptions\Observer\ProcessProfiles"/>
+    </event>
+    <event name="subscriptions_profiles_before_process">
+        <observer name="subscriptions_profiles_before_process" instance="Toppik\Subscriptions\Observer\BeforeProcessProfiles"/>
+    </event>
+    <event name="subscriptions_process_drtv_cs">
+        <observer name="subscriptions_process_drtv_cs" instance="Toppik\Subscriptions\Observer\ProcessDrtvCs"/>
+    </event>
+    <event name="sales_model_service_quote_submit_before">
+        <observer name="add_gift_item_for_first_subscription_order" instance="Toppik\Subscriptions\Observer\GiftItem"/>
+    </event>
+    <event name="checkout_cart_product_add_after">
+        <observer name="save_quote_item_to_product" instance="Toppik\Subscriptions\Observer\SaveQuoteItem"/>
+    </event>
+    <event name="sales_quote_add_item">
+        <observer name="add_to_cart" instance="Toppik\Subscriptions\Observer\QuoteAddItem"/>
+    </event>
+    <event name="subscription_update_card_billing_address">
+        <observer name="subscription_update_card_billing_address" instance="Toppik\Subscriptions\Observer\SubscriptionUpdateCardBillingAddress"/>
+    </event>
+    <event name="subscriptions_report_daily">
+        <observer name="subscriptions_report_daily" instance="Toppik\Subscriptions\Observer\ReportDaily"/>
+    </event>
+    <event name="subscriptions_suspended_temporarily_notification">
+        <observer name="subscriptions_suspended_temporarily_notification" instance="Toppik\Subscriptions\Observer\SuspendedTemporarilyNotification"/>
+    </event>
+    <event name="toppikreport_system_validation">
+        <observer name="subscription_validation" instance="Toppik\Subscriptions\Observer\SystemValidation"/>
+    </event>
+    <event name="subscription_history_add">
+        <observer name="subscription_history_add" instance="Toppik\Subscriptions\Observer\HistoryAdd"/>
+    </event>
+</config>

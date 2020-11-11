@@ -1,0 +1,283 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Catalog\Model\Product" type="Toppik\Subscriptions\Model\Rewrite\Catalog\Product"/>
+    
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="subscriptions-add-custom-options" type="Toppik\Subscriptions\Plugin\Magento\Catalog\Model\Product" sortOrder="100" />
+    </type>
+    
+    <!-- Periods -->
+    <preference for="Toppik\Subscriptions\Api\Data\Settings\PeriodInterface" type="Toppik\Subscriptions\Model\Settings\Period" />
+    <preference for="Magento\Sales\Model\AdminOrder\Create" type="Toppik\Subscriptions\Model\Rewrite\Magento\Sales\Model\AdminOrder\Create"/>
+    <virtualType name="PeriodGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="PeriodGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Toppik\Subscriptions\Model\ResourceModel\Settings\Period\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">PeriodGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Toppik\Subscriptions\Model\ResourceModel\Settings\Period\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">subscriptions_periods</argument>
+            <argument name="resourceModel" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Settings\Period</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="period_listing_data_source" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Settings\Period\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- Units -->
+    <preference for="Toppik\Subscriptions\Api\Data\Settings\UnitInterface" type="Toppik\Subscriptions\Model\Settings\Unit" />
+    <virtualType name="UnitGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="UnitGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Toppik\Subscriptions\Model\ResourceModel\Settings\Unit\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">UnitGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Toppik\Subscriptions\Model\ResourceModel\Settings\Unit\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">subscriptions_units</argument>
+            <argument name="resourceModel" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Settings\Unit</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="unit_listing_data_source" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Settings\Unit\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- Subscriptions -->
+    <preference for="Toppik\Subscriptions\Api\Data\Settings\SubscriptionInterface" type="Toppik\Subscriptions\Model\Settings\Subscription" />
+    <virtualType name="SubscriptionGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="SubscriptionGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="name" xsi:type="string">subscription_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">subscription_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="subscription_listing_data_source" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Settings\Subscription\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- Profiles -->
+    <preference for="Toppik\Subscriptions\Api\Data\ProfileInterface" type="Toppik\Subscriptions\Model\Profile" />
+    <virtualType name="ProfileGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ProfileGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="name" xsi:type="string">profile_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">profile_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="profile_listing_data_source" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Profile\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="subscriptions_sku_grid_data_source" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Sku\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Toppik\Subscriptions\Model\ResourceModel\Sku\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">subscriptions_sku_relations</argument>
+            <argument name="resourceModel" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Sku</argument>
+            <argument name="eventPrefix" xsi:type="string">subscriptions_sku_relations_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">subscriptions_sku_relations_grid_collection</argument>
+        </arguments>
+    </type>
+    
+    <virtualType name="SuspendedProfileGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="name" xsi:type="string">suspended_profile_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">profile_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+        </arguments>
+    </virtualType>
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="suspended_profile_listing_data_source" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Profile\Grid\Suspended\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <virtualType name="CancelledProfileGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="name" xsi:type="string">cancelled_profile_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+        </arguments>
+    </virtualType>
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="cancelled_profile_listing_data_source" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Profile\Grid\Cancelled\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="subscriptions_points_index_grid_data_source" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Profile\Points\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Toppik\Subscriptions\Model\ResourceModel\Profile\Points\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">subscriptions_save_points</argument>
+            <argument name="resourceModel" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Profile\Points</argument>
+            <argument name="eventPrefix" xsi:type="string">subscriptions_points_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">subscriptions_points_grid_collection</argument>
+        </arguments>
+    </type>
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="subscriptions_add_index_grid_data_source" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Profile\Add\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Toppik\Subscriptions\Model\ResourceModel\Profile\Add\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">subscriptions_rules_add</argument>
+            <argument name="resourceModel" xsi:type="string">Toppik\Subscriptions\Model\ResourceModel\Profile\Add</argument>
+            <argument name="eventPrefix" xsi:type="string">subscriptions_add_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">subscriptions_add_grid_collection</argument>
+        </arguments>
+    </type>
+    
+    <!-- Plugin for product layout update -->
+    <type name="Magento\Catalog\Helper\Product\View">
+        <plugin name="add-layout-update" type="Toppik\Subscriptions\Plugin\Magento\Catalog\Helper\Product\View" sortOrder="10" />
+    </type>
+    <!-- Plugin for Quote -->
+    <type name="Magento\Quote\Model\Quote">
+        <plugin name="handle-subscriptions" type="Toppik\Subscriptions\Plugin\Magento\Quote\Model\Quote" sortOrder="10" />
+    </type>
+    <!-- Plugin for Quote Item -->
+    <type name="Magento\Quote\Model\Quote\Item\AbstractItem">
+        <plugin name="handle-subscriptions" type="Toppik\Subscriptions\Plugin\Magento\Quote\Model\Quote\Item" sortOrder="10" />
+    </type>
+    <!-- Plugin for Address Subtotal Collector -->
+    <type name="Magento\SalesRule\Model\Quote\Discount">
+        <plugin name="remove-subscription-items" type="Toppik\Subscriptions\Plugin\Magento\SalesRule\Model\Quote\Discount" sortOrder="10" />
+    </type>
+    <type name="Magento\SalesRule\Model\Rule\Condition\Address">
+        <plugin name="salesrule-rule-address-subscription" type="Toppik\Subscriptions\Plugin\Magento\SalesRule\Model\Rule\Condition\Address" sortOrder="10" />
+    </type>
+    <type name="Magento\SalesRule\Model\Rule\Condition\Combine">
+        <plugin name="salesrule-rule-combine-subscription" type="Toppik\Subscriptions\Plugin\Magento\SalesRule\Model\Rule\Condition\Combine" sortOrder="10" />
+    </type>
+    
+    <type name="Magento\SalesRule\Model\Rule">
+        <plugin name="salesRuleDateResolver" type="Magento\SalesRuleStaging\Model\Plugin\DateResolverPlugin" disabled="true" />
+        <plugin name="salesRuleBeforeBeforeSave" type="Magento\SalesRuleStaging\Model\Plugin\Rule" sortOrder="100" disabled="true" />
+        <plugin name="salesrule-rule-subscription-actions" type="Toppik\Subscriptions\Plugin\Magento\SalesRule\Model\Rule" sortOrder="10" />
+    </type>
+    
+    <type name="Magento\Quote\Model\Quote\Address\Total\Subtotal">
+        <plugin name="remove-subscription-items" type="Toppik\Subscriptions\Plugin\Magento\Quote\Model\Quote\Address\Total\Subtotal" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Model\QuoteManagement">
+        <plugin name="remove-subscription-items" type="Toppik\Subscriptions\Plugin\Magento\Quote\Model\QuoteManagement" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Model\QuoteAddressValidator">
+        <plugin name="toppik-validate-quote-address" type="Toppik\Subscriptions\Plugin\Magento\Quote\Model\QuoteAddressValidator" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Model\ShippingAddressManagement">
+        <plugin name="toppik-quote-shipping-assignment" type="Toppik\Subscriptions\Plugin\Magento\Quote\Model\ShippingAddressManagement" sortOrder="10" />
+    </type>
+    
+    <type name="Magento\Quote\Model\Quote\Item\Updater">
+        <plugin name="toppik-subscriptions-quote-item-updater" type="Toppik\Subscriptions\Plugin\Magento\Quote\Model\Quote\Item\Updater" sortOrder="10" />
+    </type>
+    
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="remove-subscription-items-from-taxes" type="Toppik\Subscriptions\Plugin\Magento\Sales\Model\Order" sortOrder="10" />
+    </type>
+    <type name="Magento\Braintree\Gateway\Request\PaymentDataBuilder">
+        <plugin name="payment-method-nonce-2-gateway-id" type="Toppik\Subscriptions\Plugin\Magento\Braintree\Gateway\Request\PaymentDataBuilder" sortOrder="10" />
+    </type>
+    
+    <!-- 
+    <virtualType name="ProfileRelationsComposite" type="Magento\Framework\Model\ResourceModel\Db\VersionControl\RelationComposite">
+        <arguments>
+            <argument name="relationProcessors" xsi:type="array">
+                <item name="default" xsi:type="object">Toppik\Subscriptions\Model\Profile\Relation</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    
+    <type name="Toppik\Subscriptions\Model\ResourceModel\Profile">
+        <arguments>
+            <argument name="entityRelationComposite" xsi:type="object">ProfileRelationsComposite</argument>
+        </arguments>
+    </type>
+    -->
+    
+    <type name="Magento\Quote\Model\Cart\TotalsConverter">
+        <plugin name="subscription" type="Toppik\Subscriptions\Plugin\Magento\Quote\Model\Cart\TotalsConverter" sortOrder="10" />
+    </type>
+    
+    <!-- Console -->
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="subscriptionsProfilesProcess" xsi:type="object">Toppik\Subscriptions\Console\Command\ProcessProfiles</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

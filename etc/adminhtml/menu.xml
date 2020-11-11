@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Toppik_Subscriptions::subscriptions"
+             resource="Toppik_Subscriptions::subscriptions"
+             title="Subs"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="25" />
+
+        <add id="Toppik_Subscriptions::subscriptions_profiles"
+             resource="Toppik_Subscriptions::subscriptions_profiles"
+             title="Profiles"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="10"
+             parent="Toppik_Subscriptions::subscriptions" />
+        <add id="Toppik_Subscriptions::subscriptions_profiles_all"
+             resource="Toppik_Subscriptions::subscriptions_profiles"
+             title="All"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="10"
+             parent="Toppik_Subscriptions::subscriptions_profiles"
+             action="subscriptions/profiles/all" />
+        
+        <add id="Toppik_Subscriptions::subscriptions_profiles_suspended"
+             resource="Toppik_Subscriptions::subscriptions_profiles"
+             title="Suspended"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="20"
+             parent="Toppik_Subscriptions::subscriptions_profiles"
+             action="subscriptions/profiles/suspended" />
+        
+        <add id="Toppik_Subscriptions::subscriptions_profiles_cancelled"
+             resource="Toppik_Subscriptions::subscriptions_profiles"
+             title="Cancelled"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="30"
+             parent="Toppik_Subscriptions::subscriptions_profiles"
+             action="subscriptions/profiles/cancelled" />
+        
+        <add id="Toppik_Subscriptions::subscriptions_management"
+             resource="Toppik_Subscriptions::subscriptions_management"
+             title="Management"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="10"
+             parent="Toppik_Subscriptions::subscriptions" />
+             
+        <add id="Toppik_Subscriptions::subscriptions_management_change_sku"
+             resource="Toppik_Subscriptions::subscriptions_management_change_sku"
+             title="Change SKU"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="10"
+             parent="Toppik_Subscriptions::subscriptions_management"
+             action="subscriptions/management/sku" />
+         
+        <add id="Toppik_Subscriptions::subscriptions_management_save_points"
+             resource="Toppik_Subscriptions::subscriptions_management_save_points"
+             title="Save Points"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="20"
+             parent="Toppik_Subscriptions::subscriptions_management"
+             action="subscriptions/points/index" />
+        
+        <add id="Toppik_Subscriptions::subscriptions_management_add"
+             resource="Toppik_Subscriptions::subscriptions_management_add"
+             title="Add Products"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="30"
+             parent="Toppik_Subscriptions::subscriptions_management"
+             action="subscriptions/add/index" />
+         
+        <add id="Toppik_Subscriptions::subscriptions_management_sku"
+             resource="Toppik_Subscriptions::subscriptions_management"
+             title="Sku Relations"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="30"
+             parent="Toppik_Subscriptions::subscriptions_management"
+             action="subscriptions/sku/index" />
+         
+        <add id="Toppik_Subscriptions::subscriptions_settings"
+             resource="Toppik_Subscriptions::subscriptions_settings"
+             title="Settings"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="1000"
+             parent="Toppik_Subscriptions::subscriptions" />
+        <add id="Toppik_Subscriptions::subscriptions_settings_general"
+             resource="Toppik_Subscriptions::subscriptions_settings_general"
+             title="General"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="10"
+             parent="Toppik_Subscriptions::subscriptions_settings"
+             action="adminhtml/system_config/edit/section/subscriptions_settings" />
+        <add id="Toppik_Subscriptions::subscriptions_settings_subscriptions"
+             resource="Toppik_Subscriptions::subscriptions_settings_subscriptions"
+             title="Subscriptions"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="20"
+             parent="Toppik_Subscriptions::subscriptions_settings"
+             action="subscriptions/subscriptions/index" />
+        <add id="Toppik_Subscriptions::subscriptions_settings_periods"
+             resource="Toppik_Subscriptions::subscriptions_settings_periods"
+             title="Periods"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="30"
+             parent="Toppik_Subscriptions::subscriptions_settings"
+             action="subscriptions/periods/index" />
+        <add id="Toppik_Subscriptions::subscriptions_settings_units"
+             resource="Toppik_Subscriptions::subscriptions_settings_units"
+             title="Units"
+             translate="title"
+             module="Toppik_Subscriptions"
+             sortOrder="40"
+             parent="Toppik_Subscriptions::subscriptions_settings"
+             action="subscriptions/units/index" />
+    </menu>
+</config>

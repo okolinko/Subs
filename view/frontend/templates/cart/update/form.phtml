@@ -1,0 +1,97 @@
+W<?php
+/* @var \Toppik\Subscriptions\Block\Cart\Update\Form $block */
+?>
+<?php $items = $block->getQuoteItems();
+?>
+<div class="top">
+    <h6><?php echo __('SAVE 10% INSTANTLY') ?></h6>
+    <p><?php echo __('on today\'s order and each future order by selecting to automatically receive your favorite Toppik products at your desired frequency.') ?> </p>
+    <p><?php echo __('Products you\'ve added to your cart that are eligible for auto-delivery are shown below. Simply choose how often you want to receive each eligible product and hit "Update Cart".') ?></p>
+    <p><?php echo __('You can cancel your subscription any time.') ?></p>
+</div>
+
+<div class="items">
+    <form id="cart-edit" action="<?php echo $block->getUrl('subscriptions/cart/update')?>" method="post">
+        <?php foreach($items as $_item): ?>
+            <?php /* @var \Magento\Quote\Model\Quote\Item $_item */ ?>
+            <?php if($_item->getLinkedParentQuoteItem()) continue; ?>
+            <?php if(!! $_item->getOptionByCode('aw_afptc_rule')): continue; endif?>
+
+            <?php $options = $_item->getBuyRequest()->getOptions()?>
+            <?php $selected = isset($options[$block->getFrequencyAttribute()]) ? $options[$block->getFrequencyAttribute()] : ''?>
+            <?php $subscriptionItemCollection = $block->getItemsByProductId($_item->getProduct()->getId())?>
+
+            <?php if(!count($subscriptionItemCollection)): continue; endif?>
+
+            <div class="clearfix">
+                <div class="image">
+                    <img src="<?php echo $block->getProductImage($_item->getProduct()) ?>" width="110" height="110" alt="<?php echo $block->escapeHtml($_item->getProduct()->getName()) ?>" />
+                </div>
+
+                <div class="value">
+                    <h2 class="product-name">
+                        <?php echo $block->escapeHtml($_item->getProduct()->getName())?>
+                    </h2>
+
+                    <div class="item-options" id="cart-item-<?php echo $_item->getId()?>"></div>
+
+                    <select name="cart[<?php echo $_item->getId()?>][option][<?php echo $block->getFrequencyAttribute() ?>]" id="" class="">
+                        <option value="nosubscription"><?php echo __('Deliver one time only') ?></option>
+
+                        <?php foreach($subscriptionItemCollection as $item): ?>
+                            <option value="<?php echo $item->getId()?>"<?php echo ($item->getId() == $selected) ? ' selected="selected"' : ''?>><?php echo $item->getPeriod()->getTitle()?></option>
+                        <?php endforeach?>
+                    </select>
+                </div>
+            </div>
+        <?php endforeach ?>
+        <form>
+</div>
+
+<div class="button-set">
+    <button id="cart-edit-button" type="button" class="button"><span><span><?php echo __('Update Cart') ?></span></span></button>
+</div>
+
+<script type="text/javascript">
+    require(['jquery', 'msg'], function($, message) {
+        $('#cart-edit-button').click(function() {
+            var self = $(this);
+            var form = $('#cart-edit');
+
+            if(!form || !form.attr('action')) {
+                return false;
+            }
+
+            var action = function(data) {
+                self.attr('disabled', false);
+
+                toppik.module('message', function() {
+                    message.setIsDissmissable(false);
+                    message.setMainMessage('<?php echo __('Updating cart') ?>');
+                    message.setStyle('warning');
+                    message.show();
+                });
+
+                location.href = '<?php echo $block->getUrl('checkout/cart')?>';
+            }
+
+            self.attr('disabled', 'disabled');
+
+            message.setIsDissmissable(false);
+            message.setMainMessage('<?php echo __('Saving data... Please wait') ?>');
+            message.setStyle('warning');
+            message.show();
+
+            $.post(
+                form.attr('action'),
+                form.serialize(),
+                function(r) {
+                    action(r);
+                }
+            );
+
+            return false;
+        });
+    });
+</script>
+

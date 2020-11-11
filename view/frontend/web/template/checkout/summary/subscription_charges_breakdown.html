@@ -1,0 +1,63 @@
+<!-- ko if: isDisplayed() -->
+<tr class="totals subscription_subtotal">
+    <th class="mark" colspan="1" scope="row">
+        <a href="#" data-bind="text: title, click: toggleSubscriptions"></a>
+    </th>
+    <td>
+        &nbsp;
+    </td>
+</tr>
+<tr class="totals subscription_item_subtotal" data-bind="visible: visibleSubscriptions">
+    <th class="mark" colspan="1" scope="row">
+        <span data-bind="i18n: 'Today you\'ll be charged'"></span>
+        <br/>
+        <span data-bind="i18n: '(inclusive of your discount, taxes, and shipping)'"></span>
+    </th>
+    <td class="amount">
+        <span class="price" data-bind="text: getFormattedPrice(totals().extension_attributes.grand_total), attr: {'data-th': title}"></span>
+    </td>
+</tr>
+<tr class="totals subscription_item_subtotal" data-bind="visible: visibleSubscriptions">
+    <th class="mark" colspan="1" scope="row">
+        <span data-bind="i18n: 'Future Subscription Charges'"></span>
+    </th>
+    <td>&nbsp;</td>
+</tr>
+    <!-- ko foreach: items -->
+<tr class="totals subscription_item_subtotal" data-bind="visible: $parent.visibleSubscriptions">
+    <th class="mark" colspan="1" scope="row">
+        <span data-bind="i18n: 'Subscription'"></span>:
+        <span data-bind="text: name"></span>: in
+        <br/>
+        <span data-bind="text: period"></span>
+    </th>
+    <td class="amount">
+        <span class="price" data-bind="text: $parent.getFormattedPrice(row_total), attr: {'data-th': name}"></span>
+    </td>
+</tr>
+<tr class="totals subscription_item_subtotal" data-bind="visible: $parent.visibleSubscriptions">
+    <th class="mark" colspan="1" scope="row">
+        <span data-bind="i18n: 'Tax'"></span>
+    </th>
+    <td class="amount">
+        <span class="price" data-bind="text: $parent.getFormattedPrice(tax_amount), attr: {'data-th': name}"></span>
+    </td>
+</tr>
+<tr class="totals subscription_item_subtotal" data-bind="visible: $parent.visibleSubscriptions">
+    <th class="mark" colspan="1" scope="row">
+        <span data-bind="i18n: 'Shipping'"></span>
+    </th>
+    <td class="amount">
+        <span class="price" data-bind="text: $parent.getFormattedPrice(shipping), attr: {'data-th': name}"></span>
+    </td>
+</tr>
+<tr class="totals subscription_item_subtotal" data-bind="visible: $parent.visibleSubscriptions">
+    <th class="mark" colspan="1" scope="row">
+        <span data-bind="i18n: 'Subscription Subtotal'"></span>
+    </th>
+    <td class="amount">
+        <span class="price" data-bind="text: $parent.getFormattedPrice(row_total_incl_tax), attr: {'data-th': name}"></span>
+    </td>
+</tr>
+    <!-- /ko -->
+<!-- /ko -->

@@ -1,0 +1,20 @@
+<?php $address = $this->getAddress() ?>
+
+<?php if($address): ?>
+    <div class="info-box">
+        <div class="box-title">
+            <h2><?php echo $this->getInfoBoxTitle(); ?></h2>
+        </div>
+        <div class="box-content">
+            <address>
+				<?php echo $address?>
+				
+                <?php if($this->canEditAddress()): ?>
+					<div class="mt_15">
+						<button type="button" title="<?php echo $this->getEditAddressLabel() ?>" class="action button" onclick="window.location.href = '<?php echo $this->getEditAddressUrl() ?>'; return false;"><?php echo $this->getEditAddressLabel() ?></button>
+					</div>
+                <?php endif; ?>
+            </address>
+        </div>
+    </div>
+<?php endif; ?>

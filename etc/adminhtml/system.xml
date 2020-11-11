@@ -1,0 +1,280 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="sales">
+            <group id="totals_sort">
+                <field id="subscription_subtotal" translate="label" type="text" sortOrder="998" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Subscription Subtotal</label>
+                </field>
+                <field id="subscription_charges_breakdown" translate="label" type="text" sortOrder="999" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Subscription Charges Breakdown</label>
+                </field>
+            </group>
+        </section>
+
+        <tab id="subscriptions" translate="label" sortOrder="200">
+            <label>Subscriptions</label>
+        </tab>
+
+        <section id="subscriptions_settings" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Settings</label>
+            <tab>subscriptions</tab>
+            <resource>Toppik_Subscriptions::subscriptions_settings_general</resource>
+
+            <group id="general_options" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="suspend_periods" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Suspend Periods</label>
+                    <comment>Number of hours, comma-separated</comment>
+                </field>
+                <field id="enable_multistore_mode" translate="label comment" type="select" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Multistore Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="default_store" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Default Store ID</label>
+                    <depends>
+                        <field id="*/*/enable_multistore_mode">0</field>
+                    </depends>
+                </field>
+                <field id="customer_mode" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Customer Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                    <comment>Edit frequency, quantity, credit card, next order date</comment>
+                </field>
+                <field id="cancel_mode" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Cancel Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="remove_mode" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Remove Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                    <comment>Gifts, One-Time</comment>
+                </field>
+                <field id="change_mode" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Change Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                    <comment>Change Product</comment>
+                </field>
+                <field id="change_mode_full" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Subscription Product Group Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                        <field id="*/*/change_mode">1</field>
+                    </depends>
+                    <comment>Yes -> Groups OFF (can make any selection); No - Groups ON</comment>
+                </field>
+                <field id="notification_emails" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Notification Emails</label>
+                    <comment><![CDATA[Comma-separated emails.]]></comment>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="transaction_decline_timeout" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Transaction Decline Timeout</label>
+                    <comment><![CDATA[In Minutes]]></comment>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="max_suspends_allowed" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Max Suspends Allowed</label>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="suspended_temporarily_notification_days" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Number of days, prior to the next order date, when customer should be notified of the upcoming subscription order</label>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="suspended_temporarily_notification_email_template" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Email Template For Next Shipment Dates For Suspended Temporarily Profiles</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+
+                <field id="suspend_email_template_customer" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Suspend Email Template (Customer)</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+
+                <field id="suspend_email_template_admin" translate="label comment" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Suspend Email Template (Admin)</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+
+                <field id="suspend_email_template_oos_customer" translate="label comment" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Suspend Email Template When Out Of Stock (Customer)</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+
+                <field id="suspend_email_template_oos_admin" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Suspend Email Template When Out Of Stock (Admin)</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                
+                <field id="upcoming_order_minutes" translate="label comment" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Upcoming Order (Minutes)</label>
+                </field>
+                
+                <field id="upcoming_order_email_template" translate="label comment" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Upcoming Order Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                
+                <field id="next_order_date_change" translate="label comment" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Email Template For Next Order Updates</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                
+                <field id="new_subscription_email_template" translate="label comment" type="select" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Email Template For New Subscription</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                
+                <field id="sku_list_guides" translate="label comment" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>SKU List To Display Size Guides</label>
+                </field>
+
+                <field id="log" translate="label comment" type="select" sortOrder="160" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Logging</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="log_file" translate="label comment" type="text" sortOrder="170" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Log File</label>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                        <field id="*/*/log">1</field>
+                    </depends>
+                    <validate>validate-no-empty</validate>
+                </field>
+            </group>
+
+            <group id="promotions" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Promotions</label>
+                <field id="coupon_code" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Coupon Code</label>
+                    <comment>This coupon code will be forced if there are any subscription items in cart.</comment>
+                </field>
+            </group>
+
+            <group id="gift" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Free Gift For First Time Subscription</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sku" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>SKU</label>
+                    <comment><![CDATA[Only simple product are allowed.]]></comment>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                    <validate>validate-no-empty</validate>
+                </field>
+            </group>
+
+            <group id="paypal_payment" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Paypal Payment</label>
+                <field id="payment_code" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Payment Code</label>
+                </field>
+                <field id="eligible_message" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Eligible Message</label>
+                </field>
+                <field id="non_eligible_message" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Non Eligible Message</label>
+                </field>
+            </group>
+            
+            <group id="save_the_sale" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Save The Sale</label>
+                
+                <field id="enabled" translate="label comment" type="select" sortOrder="0" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                
+                <field id="single_mode" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Single Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="max_onetime_points" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInStore="0" showInWebsite="0">
+                    <label>Max Onetime Points</label>
+                </field>
+
+                <field id="max_lifetime_points" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInStore="0" showInWebsite="0">
+                    <label>Max Lifetime Points</label>
+                </field>
+
+                <field id="role_id" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInStore="0" showInWebsite="0">
+                    <label>Role ID</label>
+                </field>
+
+                <field id="cancel_email_template" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cancel Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+
+                <field id="product_gift_email_template" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Product Gift Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+
+                <field id="coupon_gift_email_template" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Coupon Gift Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
+
+        <section id="drtv_settings" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>DRTV Settings</label>
+            <tab>subscriptions</tab>
+            <resource>Toppik_Subscriptions::subscriptions_settings_general</resource>
+            <group id="general_options" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+
+    </system>
+</config>

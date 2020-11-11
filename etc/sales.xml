@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Sales:etc/sales.xsd">
+    <section name="quote">
+        <group name="totals">
+            <!-- Should work after subtotal(sort_order=100) -->
+            <item name="modify_final_price" instance="Toppik\Subscriptions\Model\Quote\Address\Total\ModifyFinalPrice" sort_order="101"/>
+            
+            <!-- Should work after tax(sort_order=450) -->
+            <item name="remove_subscription_from_subtotal_before" instance="Toppik\Subscriptions\Model\Quote\Address\Total\RemoveSubscriptionFromSubtotalBefore" sort_order="240" />
+            
+            <item name="hide_subscription_items_before_discount" instance="Toppik\Subscriptions\Model\Quote\Address\Total\HideSubscriptionItems" sort_order="399" />
+            <!-- Discount (sort_order=400) is here -->
+            <item name="show_subscription_items_after_discount" instance="Toppik\Subscriptions\Model\Quote\Address\Total\ShowSubscriptionItems" sort_order="401" />
+
+            <!-- Should work after tax(sort_order=450) -->
+            <item name="remove_subscription_from_subtotal" instance="Toppik\Subscriptions\Model\Quote\Address\Total\RemoveSubscriptionFromSubtotal" sort_order="451" />
+
+            <!-- Totals for Cart / Checkout -->
+            <item name="subscription_subtotal" instance="Toppik\Subscriptions\Model\Quote\Address\Total\SubscriptionSubtotal" sort_order="9000" />
+        </group>
+    </section>
+</config>

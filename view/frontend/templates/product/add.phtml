@@ -1,0 +1,144 @@
+
+<?php
+    $product = $block->getProduct();
+    $product_url = $product->getProductUrl();
+?>
+
+<div class="subscriptions-product-add js-subscriptionadditem-container clearfix">
+    <div class="image">
+        <img alt="<?php echo $block->escapeHtml($product->getImageAltText())?>" src="<?php echo $block->getImage($product)->getUrl() ?>"/>
+
+        <?php if($product_url):?>
+            <a href="<?php echo $product_url?>" class="more" target="_blank"><?php echo __('See More Images >') ?></a>
+        <?php endif?>
+    </div>
+
+    <div class="info">
+        <div class="title"><?php echo $block->escapeHtml($product->getName())?></div>
+
+        <div class="price">
+            <?php if($block->getAddModel()->getPrice() < $product->getFinalPrice()):?>
+                <div class="price-box price-final_price">
+                    <span class="special-price">
+                        <span class="price-container price-final_price">
+                            <span class="price-label"><?php echo __('Price')?>:</span>
+
+                            <span class="price-wrapper">
+                                <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($block->getAddModel()->getPrice(), true, false) ?>
+                            </span>
+                        </span>
+                    </span>
+
+                    <span class="old-price">
+                        <span class="price-container price-final_price">
+                            <span class="price-label"><?php echo __('Was')?>:</span>
+
+                            <span class="price-wrapper">
+                                <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($product->getFinalPrice(), true, false) ?>
+                            </span>
+                        </span>
+                    </span>
+                </div>
+            <?php else:?>
+                <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($block->getAddModel()->getPrice(), true, false) ?>
+            <?php endif?>
+        </div>
+
+        <div class="qty">
+            <p><?php echo __('Subscription: <strong># %1</strong>', $block->getProfile()->getId())?></p>
+            <p><?php echo __('Subscription Total: <strong>%1</strong>', $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($block->getProfile()->getGrandTotal(), true, false))?></p>
+            <p><?php echo __('Qty: <strong>%1</strong>', $block->getAddModel()->getQty())?></p>
+        </div>
+
+		<?php if($block->checkIsConfigurableProduct($product->getTypeId())): ?>
+            <?php $_children = $product->getTypeInstance()->getUsedProducts($product); ?>
+            <div class="color">
+                <form action="#">
+                    <p class="color-text">
+                        <label for="kit-color">Product: </label>
+                        <select name="color" id="kit-color-sku" style="width: 60%;">
+                            <option value="">Select Options</option>
+                            <?php foreach ($_children as $child): ?>
+                                <option value="<?php echo $block->getPublicHashForProduct($child->getSku()) ?>"><?php echo $child->getName() ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </p>
+                </form>
+            </div>
+		<?php endif; ?>
+
+        <div class="box-tocart">
+            <div class="fieldset">
+                <div class="actions">
+                    <button type="button" title="<?php echo __('Add to your next order')?>" class="action primary js-subscriptionadditem-link">
+                        <span><?php echo __('Add To Subscription Order')?></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="description"><?php echo $this->helper('Magento\Catalog\Helper\Output')->productAttribute($product, $product->getShortDescription(), 'short_description')?></div>
+
+        <?php if($product_url):?>
+            <a href="<?php echo $product_url?>" class="more" target="_blank"><?php echo __('More Info >') ?></a>
+        <?php endif?>
+    </div>
+</div>
+
+<script type="text/javascript">
+    define(
+        'subscription_add_item',
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(jQuery, modal) {
+            var SubscriptionAddItem;
+            SubscriptionAddItem = new Function();
+
+            SubscriptionAddItem.prototype = {
+                initialize : function() {
+                    this.is_already_added = <?php echo $block->getProfile()->getIsAlreadyAddedProduct() ? 'true' : 'false'?>;
+                    this.container = jQuery('.js-subscriptionadditem-container');
+                    this.initEvents();
+                },
+
+                initEvents: function() {
+                    var __this = this;
+                    var links = this.container.find('.js-subscriptionadditem-link').not('.handled');
+
+                    links.click(function(e) {
+                        e.preventDefault();
+                        <?php if($block->checkIsConfigurableProduct($product->getTypeId())): ?>
+                            var hash = (jQuery('#kit-color-sku').children('option:selected').val()).trim();
+                            if (hash.length === 0) {
+                                alert(jQuery.mage.__('Please select product!'));
+                                return false
+                            }
+                            var url = '<?php echo $this->getUrl('subscriptions/add/cart')?>' + 'h/' + hash ;
+                        <?php else: ?>
+                            var url = '<?php echo $this->getUrl('subscriptions/add/cart', array('h' => $block->getAddModel()->getPublicHash()))?>';
+                        <?php endif; ?>
+                        if(
+                            __this.is_already_added === false
+                            || confirm(jQuery.mage.__('This product has been already added to your subscription! Do you want to add one more?'))
+                        ) {
+                            window.location.href = url;
+                        }
+
+                        return false;
+                    });
+
+                    links.addClass('handled');
+                }
+            };
+
+            var subscriptionadditem = new SubscriptionAddItem();
+            subscriptionadditem.initialize();
+        }
+    );
+</script>
+
+<script type="text/javascript">
+    require(['subscription_add_item'], function() {});
+</script>

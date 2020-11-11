@@ -1,0 +1,34 @@
+﻿<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+	
+    <body>
+		<referenceBlock name="page.main.title" remove="true" />
+        <referenceContainer name="content">
+            <block class="Toppik\Subscriptions\Block\Customer\Account\View" name="customer.profiles.view" cacheable="false">
+				<block class="Toppik\Subscriptions\Block\Customer\Account\View\Buttons" name="customer.profiles.view.buttons" as="buttons" template="customer/account/buttons.phtml" cacheable="false">
+                    <block class="Magento\Cms\Block\Block" name="subscription-cancel-info" as="subscription_cancel_info">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">subscription-cancel-info</argument>
+                        </arguments>
+                    </block>
+                    
+                    <block class="Magento\Cms\Block\Block" name="subscription-suspend-info" as="subscription_suspend_info">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">subscription-suspend-info</argument>
+                        </arguments>
+                    </block>
+                </block>
+                
+				<block class="Toppik\Subscriptions\Block\Customer\Account\View\Reference" name="customer.profiles.view.reference" as="reference" template="customer/account/infobox.phtml" cacheable="false" />
+				<block class="Toppik\Subscriptions\Block\Customer\Account\View\Purchase" name="customer.profiles.view.purchase" as="purchase" template="customer/account/infobox.phtml" cacheable="false" />
+				<block class="Toppik\Subscriptions\Block\Customer\Account\View\Schedule" name="customer.profiles.view.schedule" as="schedule" template="customer/account/infobox.phtml" cacheable="false" />
+				<block class="Toppik\Subscriptions\Block\Customer\Account\View\Payments" name="customer.profiles.view.payments" as="payments" template="customer/account/infobox.phtml" cacheable="false" />
+				<block class="Toppik\Subscriptions\Block\Customer\Account\View\Billing" name="customer.profiles.view.billing" as="billing" template="customer/account/addressbox.phtml" cacheable="false" />
+				<block class="Toppik\Subscriptions\Block\Customer\Account\View\Shipping" name="customer.profiles.view.shipping" as="shipping" template="customer/account/addressbox.phtml" cacheable="false" />
+			</block>
+			
+            <block class="Magento\Customer\Block\Account\Dashboard" name="customer.account.link.back" template="account/link/back.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

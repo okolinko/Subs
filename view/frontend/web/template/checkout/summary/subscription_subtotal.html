@@ -1,0 +1,18 @@
+<!-- ko if: isDisplayed() -->
+<tr class="totals subscription_subtotal">
+    <th class="mark" colspan="1" scope="row">
+        <a href="#" data-bind="text: title, click: toggleSubscriptions"></a>
+    </th>
+    <td class="amount">
+        <span class="price" data-bind="text: getFormattedPrice(totals().value), attr: {'data-th': title}"></span>
+    </td>
+</tr>
+    <!-- ko foreach: items -->
+    <tr class="totals subscription_item_subtotal" data-bind="visible: $parent.visibleSubscriptions">
+        <th class="mark" colspan="1" scope="row" data-bind="text: subscription_name"></th>
+        <td class="amount">
+            <span class="price" data-bind="text: $parent.getFormattedPrice(row_total), attr: {'data-th': name}"></span>
+        </td>
+    </tr>
+    <!-- /ko -->
+<!-- /ko -->

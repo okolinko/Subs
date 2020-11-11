@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Toppik_Subscriptions::subscriptions" title="Subscriptions" translate="title">
+                    <resource id="Toppik_Subscriptions::subscriptions_management" title="Management" translate="title">
+                        <resource id="Toppik_Subscriptions::subscriptions_management_change_sku" title="Change SKU" translate="title" />
+                        <resource id="Toppik_Subscriptions::subscriptions_management_save_points" title="Save Points" translate="title" />
+                        <resource id="Toppik_Subscriptions::subscriptions_management_add" title="Add Products" translate="title" />
+                    </resource>
+                    <resource id="Toppik_Subscriptions::subscriptions_profiles" title="Profiles" translate="title">
+                        <resource id="Toppik_Subscriptions::subscriptions_profiles_activate" title="Activate" translate="title" />
+                        <resource id="Toppik_Subscriptions::subscriptions_profiles_suspend" title="Suspend" translate="title" />
+                        <resource id="Toppik_Subscriptions::subscriptions_profiles_cancel" title="Cancel" translate="title" />
+                    </resource>
+                    <resource id="Toppik_Subscriptions::subscriptions_settings" title="Settings" translate="title">
+                        <resource id="Toppik_Subscriptions::subscriptions_settings_general" title="General"
+                                  translate="title"/>
+                        <resource id="Toppik_Subscriptions::subscriptions_settings_periods" title="Periods"
+                                  translate="title"/>
+                        <resource id="Toppik_Subscriptions::subscriptions_settings_units" title="Units"
+                                  translate="title"/>
+                        <resource id="Toppik_Subscriptions::subscriptions_settings_subscriptions" title="Subscriptions"
+                                  translate="title"/>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

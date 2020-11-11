@@ -1,0 +1,25 @@
+
+<div class="info-box">
+    <div class="box-title">
+        <h2><?php echo $this->getInfoBoxTitle(); ?></h2>
+    </div>
+	
+    <div class="box-content">
+        <table class="info-table">
+            <tbody>
+                <?php foreach ($this->getInfoBoxFields() as $field) : ?>
+                    <tr<?php echo isset($field['hidden']) && $field['hidden'] === true ? ' style="display: none"' : ''?>>
+                        <th><span class="nobr"><?php echo $field['title']; ?></span></th>
+                        <td>
+                            <?php if (isset($field['url'])): ?>
+                                <a href="<?php echo $field['url']; ?>" title="<?php echo $field['value']; ?>" target="_blank"><?php echo $field['value']; ?></a>
+                            <?php else: ?>
+                                <?php echo $field['value']; ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

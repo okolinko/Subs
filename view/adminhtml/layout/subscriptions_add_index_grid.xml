@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="admin.subscriptions_points_index.grid">
+            <block class="Magento\Backend\Block\Widget\Grid" name="items.admin.subscriptions_points_index.grid" as="grid">
+                <arguments>
+                    <argument name="id" xsi:type="string">pointsGrid</argument>
+                    <argument name="dataSource" xsi:type="object">Toppik\Subscriptions\Model\ResourceModel\Profile\Points\Grid\Collection</argument>
+                    <argument name="default_sort" xsi:type="string">id</argument>
+                    <argument name="default_dir" xsi:type="string">ASC</argument>
+                    <argument name="save_parameters_in_session" xsi:type="string">1</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

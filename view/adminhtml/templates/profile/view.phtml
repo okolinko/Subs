@@ -1,0 +1,497 @@
+<?php
+/* @var \Toppik\Subscriptions\Block\Adminhtml\Profile\View $block */
+?>
+
+<div data-mage-init='{"floatingHeader": {}}' class="page-actions"><?php echo $block->getButtonsHtml() ?></div>
+
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo $block->escapeHtml(__('Profile Information')) ?></span>
+    </div>
+    
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-information">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo $block->escapeHtml(__('General')) ?></span>
+            </div>
+            
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary">
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Description')) ?></th>
+                        <td><?php echo $block->escapeHtml($block->getProfileName($block->getProfile())) ?></td>
+                    </tr>
+                    
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Status')) ?></th>
+                        <td><?php echo $block->escapeHtml($block->getStatus()) ?></td>
+                    </tr>
+                    
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Payment Method')) ?></th>
+                        <td><?php echo $block->escapeHtml($block->getPaymentMethod()) ?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="admin__page-section-item order-account-information">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo $block->escapeHtml(__('Account Information')) ?></span>
+            </div>
+            
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary">
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Customer Name')) ?></th>
+                        <td>
+                            <a href="<?php echo $this->getUrl('customer/index/edit', ['id' => $block->getProfile()->getCustomer()->getId()])?>" target="_blank">
+                                <span><?php echo $block->escapeHtml($block->getProfile()->getCustomer()->getName()) ?></span>
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Email')) ?></th>
+                        <td>
+                            <a href="<?php echo $this->getUrl('customer/index/edit', ['id' => $block->getProfile()->getCustomer()->getId()])?>" target="_blank">
+                                <span><?php echo $block->escapeHtml($block->getProfile()->getCustomer()->getEmail()) ?></span>
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <?php if($group = $this->getCustomerGroupName()):?>
+                        <tr>
+                            <th><?php echo $block->escapeHtml(__('Customer Group')) ?></th>
+                            <td><?php echo $block->escapeHtml($group) ?></td>
+                        </tr>
+                    <?php endif?>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-information">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo $block->escapeHtml(__('Profile Schedule')) ?></span>
+            </div>
+            
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary">
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Start Date')) ?></th>
+                        <td><?php echo $block->escapeHtml($block->getStartDate()) ?></td>
+                    </tr>
+                    
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Billing Period')) ?></th>
+                        <td><?php echo $block->escapeHtml($block->getBillingPeriod()) ?></td>
+                    </tr>
+                    
+                    <?php if($block->getNextOrderDate()):?>
+                        <tr>
+                            <th><?php echo $block->escapeHtml(__('Next Order Date')) ?></th>
+                            <td><?php echo $block->escapeHtml($block->getNextOrderDate()) ?> (<?php echo $this->getNextOrderDateType()?>)</td>
+                        </tr>
+                    <?php endif?>
+                    
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Suspend Counter')) ?></th>
+                        <td><?php echo $block->escapeHtml($block->getProfile()->getSuspendCounter()) ?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="admin__page-section-item order-account-information">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo $block->escapeHtml(__('Subscription Payments')) ?></span>
+            </div>
+            
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary">
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Currency')) ?></th>
+                        <td><?php echo $block->escapeHtml($block->getProfile()->getCurrencyCode()) ?></td>
+                    </tr>
+                    
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Billing Amount')) ?></th>
+                        <td><?php echo $block->escapeHtml($block->getProfile()->getBillingAmount()) ?></td>
+                    </tr>
+                    
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Shipping Amount')) ?></th>
+                        <td><?php echo $block->escapeHtml($block->getProfile()->getShippingAmount()) ?></td>
+                    </tr>
+                    
+                    <tr>
+                        <th><?php echo $block->escapeHtml(__('Tax Amount')) ?></th>
+                        <td><?php echo $block->escapeHtml($block->getProfile()->getTaxAmount()) ?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-information">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo $block->escapeHtml(__('Purchased Item')) ?></span>
+            </div>
+            
+            <?php foreach($block->getProfile()->getAllVisibleItems() as $_item):?>
+                <?php if((int) $_item->getData('is_onetime_gift') !== 1):?>
+                    <div class="admin__page-section-item-content" style="margin-bottom: 35px;">
+                        <table class="admin__table-secondary">
+                            <tr>
+                                <th><?php echo $block->escapeHtml(__('Product Name')) ?></th>
+                                <td><?php echo $block->escapeHtml($_item->getName()) ?></td>
+                            </tr>
+                            
+                            <tr>
+                                <th><?php echo $block->escapeHtml(__('SKU')) ?></th>
+                                <td><?php echo $block->escapeHtml($_item->getSku()) ?></td>
+                            </tr>
+                            
+                            <tr>
+                                <th><?php echo $block->escapeHtml(__('Quantity')) ?></th>
+                                <td><?php echo $block->escapeHtml((int) $_item->getQty()) ?></td>
+                            </tr>
+                        </table>
+                    </div>
+                <?php endif?>
+            <?php endforeach?>
+        </div>
+        
+        <?php if($gifts = $block->getProfile()->getAllVisibleGiftItems()):?>
+            <?php if(count($gifts) > 0):?>
+                <div class="admin__page-section-item order-account-information">
+                    <div class="admin__page-section-item-title">
+                        <span class="title"><?php echo $block->escapeHtml(__('Gift Item%1', (count($gifts) > 1 ? 's' : ''))) ?></span>
+                    </div>
+                    
+                    <?php foreach($gifts as $_item):?>
+                        <div class="admin__page-section-item-content" style="margin-bottom: 35px;">
+                            <table class="admin__table-secondary">
+                                <tr>
+                                    <th><?php echo $block->escapeHtml(__('Product Name')) ?></th>
+                                    <td><?php echo $block->escapeHtml($_item->getName()) ?></td>
+                                </tr>
+                                
+                                <tr>
+                                    <th><?php echo $block->escapeHtml(__('SKU')) ?></th>
+                                    <td><?php echo $block->escapeHtml($_item->getSku()) ?></td>
+                                </tr>
+                                
+                                <tr>
+                                    <th><?php echo $block->escapeHtml(__('Quantity')) ?></th>
+                                    <td><?php echo $block->escapeHtml((int) $_item->getQty()) ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                    <?php endforeach?>
+                </div>
+            <?php endif?>
+        <?php endif?>
+    </div>
+</section>
+
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo __('Address Information') ?></span>
+    </div>
+    
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-information">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo $block->escapeHtml(__('Billing Address')) ?></span>
+            </div>
+            
+            <div class="admin__page-section-item-content">
+                <?php echo $block->getBillingAddress(); ?>
+            </div>
+        </div>
+        
+        <div class="admin__page-section-item order-account-information">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo $block->escapeHtml(__('Shipping Address')) ?></span>
+            </div>
+            
+            <div class="admin__page-section-item-content">
+                <?php echo $block->getShippingAddress(); ?>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo $block->escapeHtml(__('Save The Sale')) ?></span>
+    </div>
+    
+    <?php echo $this->getChildHtml('save') ?>
+</section>
+
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo $block->escapeHtml(__('Profile History')) ?></span>
+    </div>
+    
+    <?php echo $this->getChildHtml('history') ?>
+</section>
+
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo $block->escapeHtml(__('Orders')) ?></span>
+    </div>
+    
+    <?php echo $this->getChildHtml('orders') ?>
+</section>
+
+
+<?php if($block->getProfile()->canUpdate() && $this->hasConfigurable($block->getProfile())):?>
+    <script>
+        require([
+            'Toppik_Subscriptions/js/product/scripts'
+        ], function() {});
+    </script>
+    
+    <div id="container-change_simple" class="container-change_simple mb_50" style="display: none;">
+        <form action="<?php echo $this->getUrl('subscriptions/profiles/updatePost')?>" method="post">
+            <?php echo $block->getBlockHtml('formkey')?>
+            <input type="hidden" name="profile_id" value="<?php echo $block->getProfile()->getId()?>" />
+            <input type="hidden" name="action_type" value="change_simple" />
+            
+            <div class="main-section">
+                <div class="admin__page-section-title head-account">
+                    <span class="title"><?php echo __('Product')?></span>
+                </div>
+                
+                <div id="change_simple_grid" data-grid-id="change_simple_grid">
+                    <div class="admin__data-grid-wrap admin__data-grid-wrap-static">
+                        <table class="data-grid" id="change_simple_grid_table">
+                            <thead>
+                                <tr>
+                                    <th class="data-grid-th no-link col-name"><span><?php echo __('Product Name')?></span></th>
+                                    <th class="data-grid-th no-link col-sku"><span><?php echo __('SKU')?></span></th>
+                                    <th class="data-grid-th no-link col-sku"><span><?php echo __('New SKU')?></span></th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <?php foreach($block->getProfile()->getAllItems() as $_item):?>
+                                    <?php if((int) $_item->getData('is_onetime_gift') !== 1):?>
+                                        <tr title="#">
+                                            <td class="col-name">
+                                                <span class="value"><?php echo $_item->getName()?></span>
+                                            </td>
+                                            
+                                            <td class="col-sku">
+                                                <?php echo $_item->getSku()?>
+                                            </td>
+                                            
+                                            <td class="col-input">
+                                                <?php if($_item->getProductType() == 'simple' && $_item->getParentItemId()):?>
+                                                    <input name="item[<?php echo $_item->getId()?>][sku]" value="" class="input-text admin__control-text" type="text" />
+                                                <?php endif?>
+                                            </td>
+                                        </tr>
+                                     <?php endif?>
+                                <?php endforeach?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+<?php endif?>
+
+
+<?php if($block->getProfile()->canCancel()):?>
+    <script>
+        if(!window.subscriptionPointsRegistry) {
+            window.subscriptionPointsRegistry = {};
+        }
+        
+        window.subscriptionPointsConfig = {
+            available_onetime_points: <?php echo $this->getAvailableOnetimePointsNumber() ? $this->getAvailableOnetimePointsNumber() : 0?>,
+            can_save: <?php echo $block->canShowPoints() ? 'true' : 'false'?>,
+            can_cancel: <?php echo $block->getProfile()->canCancel() ? 'true' : 'false'?>,
+            cancel_url: '<?php echo $this->getUrl('subscriptions/profiles/cancel/', ['profile_id' => $block->getProfile()->getId()])?>',
+            coupon_url: '<?php echo $this->getUrl('subscriptions/points/coupon')?>'
+        };
+        
+        require([
+            'Magento_Catalog/catalog/product/composite/configure',
+            'Toppik_Subscriptions/js/save/scripts'
+        ], function() {
+            if(window.productConfigure) {
+                productConfigure.addListType('product_to_add', {
+                    urlFetch: '<?php echo $block->getUrl('subscriptions/profiles/configureProductToAdd') ?>'
+                });
+            }
+        });
+    </script>
+    
+    <div id="container-save_the_sale" class="container-save_the_sale mb_50" style="display: none;">
+        <?php if($block->canShowPoints()):?>
+            <div class="nav-bar-info">
+                <ul>
+                    <li style="display: none;">
+                        <strong><?php echo $this->getMaxOnetimePoints()?></strong>
+                        <span><?php echo __('Max Onetime Points')?></span>
+                    </li>
+                    
+                    <li>
+                        <strong><?php echo $this->getMaxLifetimePoints()?></strong>
+                        <span><?php echo __('Max STS')?></span>
+                    </li>
+                    
+                    <li>
+                        <strong><?php echo $this->getLifetimeUsedPoints()?></strong>
+                        <span><?php echo __('Used STS')?></span>
+                    </li>
+                    
+                    <li style="display: none;">
+                        <strong><?php echo $this->getAvailableOnetimePoints()?></strong>
+                        <span><?php echo __('Available Onetime Points')?></span>
+                    </li>
+                    
+                    <li class="selected-points" style="display: none;">
+                        <strong class="value">0</strong>
+                        <span><?php echo __('Selected Points')?></span>
+                    </li>
+                </ul>
+            </div>
+            
+            <form action="<?php echo $this->getUrl('subscriptions/profiles/updatePost')?>" method="post" id="profile_points_form" data-load-base-url="<?php echo $block->getLoadBlockUrl() ?>">
+                <?php echo $block->getBlockHtml('formkey')?>
+                <input type="hidden" name="profile_id" value="<?php echo $block->getProfile()->getId()?>" />
+                <input type="hidden" name="action_type" value="save_the_sale" />
+                
+                <div class="selected-options"></div>
+                
+                <div class="sidebar">
+                    <div class="title">
+                        <h5><?php echo __('Summary')?></h5>
+                    </div>
+                    
+                    <div class="summary-block">
+                        <h6 class="selected-points" style="display: none;">
+                            <span><?php echo __('Selected Points')?>: </span>
+                            <strong class="value">0</strong>
+                        </h6>
+                        
+                        <h6 class="earned-points">
+                            <span><?php echo __('Earned Points')?>: </span>
+                            <strong class="value">0</strong>
+                        </h6>
+                    </div>
+                    
+                    <div class="admin__field field select-options-block" style="display: none;">
+                        <div class="admin__page-section-title">
+                            <strong class="title"><?php echo __('Selected Option(s)')?></strong>
+                        </div>
+                        
+                        <div class="selected-labels">
+                            <div class="value">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="admin__field field" id="container-save_the_sale-selected-coupons" style="display: none;">
+                        <div class="admin__page-section-title">
+                            <strong class="title"><?php echo __('Selected Coupon(s)')?></strong>
+                        </div>
+                        
+                        <div id="order-items_grid">
+                            <div class="admin__table-wrapper">
+                                <table class="data-table admin__table-primary order-tables">
+                                    <thead>
+                                        <tr class="headings">
+                                            <th class="col-product"><span><?php echo __('Name')?></span></th>
+                                            <th class="col-product"><span><?php echo __('Code')?></span></th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <tr class="even">
+                                            <td class="empty-text" colspan="100"><?php echo __('No items')?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="admin__field field" id="container-save_the_sale-selected-products" style="display: none;">
+                        <div class="admin__page-section-title">
+                            <strong class="title"><?php echo __('Selected Product(s)')?></strong>
+                        </div>
+                        
+                        <div id="order-items_grid">
+                            <div class="admin__table-wrapper">
+                                <table class="data-table admin__table-primary order-tables">
+                                    <thead>
+                                        <tr class="headings">
+                                            <th class="col-product"><span><?php echo __('Product')?></span></th>
+                                            <th class="col-price"><span><?php echo __('Price')?></span></th>
+                                            <th class="col-qty"><span><?php echo __('Qty')?></span></th>
+                                            <th class="col-subtotal"><span><?php echo __('Subtotal')?></span></th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <tr class="even">
+                                            <td class="empty-text" colspan="100"><?php echo __('No ordered items')?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="main-section">
+                    <div class="steps">
+                        <div class="step step-1 mb_50">
+                            <div class="admin__page-section-title head-account">
+                                <span class="title"><?php echo __('Step 1: Select Option(s)')?></span>
+                            </div>
+                            
+                            <div>
+                                <?php echo $this->getChildHtml('points') ?>
+                            </div>
+                            
+                            <div id="container-save_the_sale-search-product">
+                                <?php echo $this->getChildHtml('products_grid') ?>
+                            </div>
+                        </div>
+                        
+                        <div class="step step-2 mb_50">
+                            <div class="admin__page-section-title head-account">
+                                <span class="title"><?php echo __('Step 2: Type Message (Optional)')?></span>
+                            </div>
+                            
+                            <div class="admin__field field">
+                                <label class="label admin__field-label" for="profile_points_form_message"><span><?php echo __('Message')?></span></label>
+                                
+                                <div class="admin__field-control control">
+                                    <textarea name="note" id="profile_points_form_message" class="admin__control-textarea"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        <?php endif?>
+    </div>
+<?php endif?>
